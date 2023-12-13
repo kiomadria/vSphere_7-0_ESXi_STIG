@@ -1,0 +1,131 @@
+---
+#verifcation
+- set_fact:
+    jsondata: "{{ lookup('file', 'files/U_VMW_vSphere_7-0_ESXi_V1R2_Manual_STIG.cklb')|from_json }}"
+
+- name: Turn on SSH access to ESX hosts
+  community.vmware.vmware_host_service_manager:
+    hostname: "{{ inventory_hostname }}"
+    password: "{{ ansible_password }}"
+    username: "{{ ansible_user }}"
+    esxi_hostname: "{{ inventory_hostname }}"
+    validate_certs: no
+    service_name: TSM-SSH
+    state: present
+  delegate_to: localhost
+
+- name: Gather host info about all ESXi Hosts
+  community.vmware.vmware_host_facts:
+    hostname: "{{ inventory_hostname }}"
+    password: "{{ ansible_password }}"
+    username: "{{ ansible_user }}"
+    esxi_hostname: "{{ inventory_hostname }}"
+    validate_certs: no
+  register: host_facts_info
+  delegate_to: localhost
+
+- name: Gather config info about all ESXi Hosts
+  community.vmware.vmware_host_config_info:
+    esxi_hostname: "{{ inventory_hostname }}"
+    hostname: "{{ inventory_hostname }}"
+    password: "{{ ansible_password }}"
+    username: "{{ ansible_user }}"
+    validate_certs: no
+  register: config_info
+  delegate_to: localhost
+
+- name: Gather service info about all ESXi Hosts
+  community.vmware.vmware_host_service_info:
+    hostname: "{{ inventory_hostname }}"
+    password: "{{ ansible_password }}"
+    username: "{{ ansible_user }}"
+    esxi_hostname: "{{ inventory_hostname }}"
+    validate_certs: no
+  register: service_info
+  delegate_to: localhost
+
+- name: V-256449
+  shell: "/usr/lib/vmware/openssh/bin/sshd -T|grep ciphers"
+  register: ssh_ciphers
+  ignore_errors: true
+
+- name: V-256447
+  shell: esxcli system settings encryption get|grep "Secure Boot"
+  register: secure_boot
+  ignore_errors: true
+
+
+- name: set varibles from info
+  set_fact:
+  #set fact for configs
+  ##[ansible_hostname]
+  ##[ansible_hostname + '.' + ansible_domain]
+    UserVarsHostClientSessionTimeout: "{{ config_info.hosts_info[ansible_hostname]['UserVars.HostClientSessionTimeout'] }}"
+    ConfigHostAgentvmacoresoapsessionTimeout: "{{ config_info.hosts_info[ansible_hostname]['Config.HostAgent.vmacore.soap.sessionTimeout'] }}"
+    expected_ssh_ciphers: "ciphers aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr"
+    
+    #service_info
+    cim_service: "{{ service_info.host_service_info[ansible_hostname][11].key }}"
+    cim_service_running: "{{ service_info.host_service_info[ansible_hostname][11].running }}"
+    cim_service_policy: "{{ service_info.host_service_info[ansible_hostname][11].policy }}"
+
+- name: set Status Variables
+  set_fact:
+    ConfigHostAgentvmacoresoapsessionTimeout_status: "{{ 'not_a_finding' if ConfigHostAgentvmacoresoapsessionTimeout == 30 else 'open'}}"
+    UserVarsHostClientSessionTimeout_status:  "{{ 'not_a_finding' if UserVarsHostClientSessionTimeout  == 600 else 'open' }}"
+    ssh_ciphers_status: "{{ 'not_a_finding' if ssh_ciphers.stdout  == expected_ssh_ciphers else 'open' }}"
+    cim_status: "{{ 'not_a_finding' if cim_service_running  == false and cim_service_policy == 'off' else 'open' }}"
+    secure_boot_status: "{{ 'not_a_finding' if secure_boot.stdout  ==  '   Require Secure Boot: true'  else 'open' }}"
+- name: Set Status in JSON
+  set_fact:
+    gid_status: "{{ gid_status | combine (
+      { 'V-256440' : '{{ ConfigHostAgentvmacoresoapsessionTimeout_status }}' }, 
+      { 'V-256441' : '{{ UserVarsHostClientSessionTimeout_status }}' },
+      { 'V-256449' : '{{ ssh_ciphers_status }}'},
+      { 'V-556448' : '{{ cim_status }}'},
+      { 'V-256447' : '{{ secure_boot_status }}'}
+      )  }}"
+
+
+- name: Set Comments in JSON
+  set_fact:
+    gid_comments: "{{ gid_comments | combine (
+      { 'V-256440' : 'The Config.HostAgent.vmacore.soap.sessionTimeout is set to {{ ConfigHostAgentvmacoresoapsessionTimeout }}' }, 
+      { 'V-256441' : 'The UserVars.HostClientSessionTimeout is set to {{ UserVarsHostClientSessionTimeout }}' },
+      { 'V-256449' : 'The ciphers in the sshd file are {{ ssh_ciphers_status }}'},
+      { 'V-556448' : 'The CIM status is set to {{cim_service_running}} and the policy is set to cim_service_policy'},
+      { 'V-256447' : 'The system is set for secure boot to:  {{ secure_boot }}'}
+      )  }}"
+
+
+
+
+   
+# - debug: var=gid_comments
+# - debug: var=gid_status
+
+- name: update JSON
+  ansible.utils.update_fact:
+    updates:       
+      - path:  jsondata.target_data.ip_address
+        value: "{{ host_facts_info.ansible_facts.ansible_vmk0.ipv4.address }}"
+      - path:  jsondata.target_data.host_name
+        value: "{{ host_facts_info.ansible_facts.ansible_hostname }}"
+      - path: jsondata.stigs.0.rules
+        value: "{{ stigs_dostuff }}"            
+  register:  update 
+
+
+
+- name: output to file
+  copy:
+    dest: files/{{ host_facts_info.ansible_facts.ansible_hostname }}_{{ jsondata.title}}.cklb  #_U_VMW_vSphere_7-0_ESXi_V1R2_Manual_STIG.cklb
+    content: "{{ update.jsondata | to_json}}"
+  delegate_to: localhost
+
+#- name: V-256376 debug
+#  debug: var=gid_comments['V-256376']
+
+- debug: var=ssh_ciphers
+- debug: var=ssh_ciphers_status
+#- debug: var=service_info.host_service_info[ansible_hostname][11]

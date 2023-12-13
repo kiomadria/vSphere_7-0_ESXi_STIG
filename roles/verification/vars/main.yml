@@ -1,0 +1,25 @@
+---
+#jsondata: "{{ lookup('file', './files/U_VMW_vSphere_7-0_ESXi_V1R2_Manual_STIG.cklb') | from_json}}"
+gid_comments:
+#  V-256376: this worked
+#  V-256441: 900
+gid_status:
+#  V-256376: open
+#  V-256441: not_a_finding
+stigs_comments: |
+    [{% for i in jsondata.stigs.0.rules %}
+    {{ i|combine({'comments': gid_comments[i.group_id]|d(i.comments)}) }},
+    {% endfor %}]
+stigs_status: |
+    [{% for i in jsondata.stigs.0.rules %}
+    {{ i|combine({'status': gid_status[i.group_id]|d(i.status)}) }},
+    {% endfor %}]
+stigs_findings: |
+    [{% for i in jsondata.stigs.0.rules %}
+    {{ i|combine({'finding_details': gid_comments[i.group_id]|d(i.finding_details)}) }},
+    {% endfor %}]    
+
+stigs_dostuff: |
+    [{% for i in jsondata.stigs.0.rules %}
+    {{ i|combine({'finding_details': gid_comments[i.group_id]|d(i.finding_details)}, {'status': gid_status[i.group_id]|d(i.status)}, {'comments': gid_comments[i.group_id]|d(i.comments)}) }},
+    {% endfor %}]
