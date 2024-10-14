@@ -1,0 +1,33 @@
+---
+cluster_name: "Staging"
+vcenter_name: "10.10.10.20"
+vcenter_username: "administrator@vsphere.local"
+syslogServer: "10.10.11.21"
+logDir: "[]/scratch"
+ntp_server:
+  - 10.10.11.21
+  - 10.10.11.22
+  #- 1.1.1.2
+snmp_in_use: False #True/False
+esxAdminsGroup: 'stagingEsxAdminsGroup'
+sshBanner: "**************************************WARNING************************************** \n This computer system is the property of CDWG CADRE Labs. It is for authorized use only. \n By using this system, all users acknowledge notice of, and agree to comply with, CDW's  \n Acceptable Use of Information Technology Resources Policy (AUP). Users have no personal \n privacy rights in any materials they place, view, access, or transmit on this system.  \n CDW complies with state and federal law regarding certain legally protected confidential  \n information, but makes no representation that any uses of this system will be private or \n confidential. Any or all uses of this system and all files on this system may be  \n intercepted, monitored, recorded, copied, audited, inspected, and disclosed to authorized  \n CDW and law enforcement personnel, as well as authorized individuals of other organizations.  \n By using this system, the user consents to such interception, monitoring, recording, copying, \n auditing, inspection, and disclosure at the discretion of authorized CDW personnel.  \n Unauthorized or improper use of this system may result in administrative disciplinary \n action, civil charges/criminal penalties, and/or other sanctions as set forth in the CDW AUP. \n By continuing to use this system you indicate your awareness of and consent to these terms and conditions of use.  \n LOG OFF IMMEDIATELY if you do not agree to the conditions stated in this warning. \n **************************************WARNING************************************** \n \n \n"
+shellBanner: "{bgcolor:black} {/color}{align:left}{bgcolor:black}{color:yellow}{hostname} , {ip}{/color}{/bgcolor}{/align}\n{bgcolor:black} {/color}{align:left}{bgcolor:black}{color:yellow}{esxproduct} {esxversion}{/color}{/bgcolor}{/align}\n{bgcolor:black} {/color}{align:left}{bgcolor:black}{color:yellow}{memory} RAM{/color}{/bgcolor}{/align}\n{bgcolor:black} {/color}{align:left}{bgcolor:black}{color:white}        {/color}{/bgcolor}{/align}\n{bgcolor:black} {/color}{align:left}{bgcolor:yellow}{color:black}                                                                                                                          {/color}{/bgcolor}{/align}\n{bgcolor:black} {/color}{align:left}{bgcolor:yellow}{color:black}**************************************WARNING************************************** \n 
+This computer system is the property of CDWG CADRE Labs. It is for authorized use only. \n 
+By using this system, all users acknowledge notice of, and agree to comply with, CDW's  \n 
+Acceptable Use of Information Technology Resources Policy (AUP). Users have no personal \n 
+privacy rights in any materials they place, view, access, or transmit on this system.  \n 
+CDW complies with state and federal law regarding certain legally protected confidential  \n 
+information, but makes no representation that any uses of this system will be private or \n 
+confidential. Any or all uses of this system and all files on this system may be  \n 
+intercepted, monitored, recorded, copied, audited, inspected, and disclosed to authorized  \n 
+CDW and law enforcement personnel, as well as authorized individuals of other organizations.  \n 
+By using this system, the user consents to such interception, monitoring, recording, copying, \n 
+auditing, inspection, and disclosure at the discretion of authorized CDW personnel.  \n 
+Unauthorized or improper use of this system may result in administrative disciplinary \n 
+action, civil charges/criminal penalties, and/or other sanctions as set forth in the CDW AUP. \n 
+By continuing to use this system you indicate your awareness of and consent to these terms and
+conditions of use.  \n 
+LOG OFF IMMEDIATELY if you do not agree to the conditions stated in this warning. \n 
+**************************************WARNING************************************** \n {/color} 
+{/bgcolor}\n{bgcolor:black} {/color}{align:left}{bgcolor:dark-grey}{color:white}  <F2> Accept Conditions and Customize System / View Logs{/align}{align:right}<F12> Accept Conditions and Shut Down/Restart  {bgcolor:black} {/color}{/color}{/bgcolor}{/align}\n{bgcolor:black} {/color}{bgcolor:dark-grey}{color:black}                                                                                                                          {/color}{/bgcolor} "
+
