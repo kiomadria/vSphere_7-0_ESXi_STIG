@@ -6,14 +6,14 @@ gid_comments:
 gid_status:
 #  V-256376: open
 #  V-256441: not_a_finding
-stigs_comments: |
-    [{% for i in jsondata.stigs.0.rules %}
-    {{ i|combine({'comments': gid_comments[i.group_id]|d(i.comments)}) }},
-    {% endfor %}]
-stigs_status: |
-    [{% for i in jsondata.stigs.0.rules %}
-    {{ i|combine({'status': gid_status[i.group_id]|d(i.status)}) }},
-    {% endfor %}]
+#stigs_comments: |
+#    [{% for i in jsondata.stigs.0.rules %}
+#    {{ i|combine({'comments': gid_comments[i.group_id]|d(i.comments)}) }},
+#    {% endfor %}]
+#stigs_status: |
+#    [{% for i in jsondata.stigs.0.rules %}
+#    {{ i|combine({'status': gid_status[i.group_id]|d(i.status)}) }},
+#    {% endfor %}]
 stigs_findings: |
     [{% for i in jsondata.stigs.0.rules %}
     {{ i|combine({'finding_details': gid_comments[i.group_id]|d(i.finding_details)}) }},

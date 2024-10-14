@@ -1,0 +1,18 @@
+
+- name: Enable SSH Access to ESXi Hosts in cluster
+  hosts: stagingesx
+  gather_facts: false
+  vars_files:
+    - vars/main.yml
+  tasks:  
+    - name: Enable SSH for gather facts
+      community.vmware.vmware_host_service_manager:
+        esxi_hostname: "{{ inventory_hostname }}"
+        hostname: "{{ inventory_hostname }}"
+        password: "{{ ansible_password }}"
+        username: "{{ ansible_user }}"
+        validate_certs: no
+        service_name: TSM-SSH
+        state: start
+      delegate_to: localhost
+

@@ -1,0 +1,288 @@
+---
+#advanced options
+
+- name: V-256443_rule
+  community.vmware.vmware_host_config_manager:
+    esxi_hostname: "{{ inventory_hostname }}"
+    hostname: "{{ inventory_hostname }}"
+    password: "{{ ansible_password }}"
+    username: "{{ ansible_user }}"
+    validate_certs: no
+    options:
+      "Security.PasswordMaxDays": "90"
+  delegate_to: localhost
+  
+- name: V-256441_rule
+  community.vmware.vmware_host_config_manager:
+    esxi_hostname: "{{ inventory_hostname }}"
+    hostname: "{{ inventory_hostname }}"
+    password: "{{ ansible_password }}"
+    username: "{{ ansible_user }}"
+    validate_certs: no
+    options:
+      "UserVars.HostClientSessionTimeout": "600"
+  delegate_to: localhost
+
+- name: V-256440_rule
+  community.vmware.vmware_host_config_manager:
+    esxi_hostname: "{{ inventory_hostname }}"
+    hostname: "{{ inventory_hostname }}"
+    password: "{{ ansible_password }}"
+    username: "{{ ansible_user }}"
+    validate_certs: no
+    options:
+      "Config.HostAgent.vmacore.soap.sessionTimeout": "30"
+  delegate_to: localhost
+
+- name: V-256439_rule
+  community.vmware.vmware_host_config_manager:
+    esxi_hostname: "{{ inventory_hostname }}"
+    hostname: "{{ inventory_hostname }}"
+    password: "{{ ansible_password }}"
+    username: "{{ ansible_user }}"
+    validate_certs: no
+    options:
+      "Mem.MemEagerZero": "1"
+  delegate_to: localhost
+
+- name: V-256438_rule
+  community.vmware.vmware_host_config_manager:
+    esxi_hostname: "{{ inventory_hostname }}"
+    hostname: "{{ inventory_hostname }}"
+    password: "{{ ansible_password }}"
+    username: "{{ ansible_user }}"
+    validate_certs: no
+    options:
+      "Syslog.global.logCheckSSLCerts": "true"
+  delegate_to: localhost
+
+- name: V-256433_rule
+  community.vmware.vmware_host_config_manager:
+    esxi_hostname: "{{ inventory_hostname }}"
+    hostname: "{{ inventory_hostname }}"
+    password: "{{ ansible_password }}"
+    username: "{{ ansible_user }}"
+    validate_certs: no
+    options:
+      "UserVars.SuppressHyperthreadWarning": "0"
+  delegate_to: localhost
+  
+- name: V-256432_rule
+  community.vmware.vmware_host_config_manager:
+    esxi_hostname: "{{ inventory_hostname }}"
+    hostname: "{{ inventory_hostname }}"
+    password: "{{ ansible_password }}"
+    username: "{{ ansible_user }}"
+    validate_certs: no
+    options:
+      "UserVars.SuppressShellWarning": "0"
+  delegate_to: localhost  
+  
+- name: V-256429_rule
+  community.vmware.vmware_host_config_manager:
+    esxi_hostname: "{{ inventory_hostname }}"
+    hostname: "{{ inventory_hostname }}"
+    password: "{{ ansible_password }}"
+    username: "{{ ansible_user }}"
+    validate_certs: no
+    options:
+      "UserVars.ESXiVPsDisabledProtocols": "tlsv1,tlsv1.1,sslv3"
+  delegate_to: localhost    
+  
+- name: V-256423_rule
+  community.vmware.vmware_host_config_manager:
+    esxi_hostname: "{{ inventory_hostname }}"
+    hostname: "{{ inventory_hostname }}"
+    password: "{{ ansible_password }}"
+    username: "{{ ansible_user }}"
+    validate_certs: no
+    options:
+      "Net.DVFilterBindIpAddress": ""
+  delegate_to: localhost      
+
+- name: V-256419_rule
+  community.vmware.vmware_host_config_manager:
+    esxi_hostname: "{{ inventory_hostname }}"
+    hostname: "{{ inventory_hostname }}"
+    password: "{{ ansible_password }}"
+    username: "{{ ansible_user }}"
+    validate_certs: no
+    options:
+      "Net.BlockGuestBPDU": "1"
+  delegate_to: localhost     
+
+- name: V-256416_rule
+  community.vmware.vmware_host_config_manager:
+    esxi_hostname: "{{ inventory_hostname }}"
+    hostname: "{{ inventory_hostname }}"
+    password: "{{ ansible_password }}"
+    username: "{{ ansible_user }}"
+    validate_certs: no
+    options:
+      "Mem.ShareForceSalting": "2"
+  delegate_to: localhost   
+
+- name: V-256408_rule
+  community.vmware.vmware_host_config_manager:
+    esxi_hostname: "{{ inventory_hostname }}"
+    hostname: "{{ inventory_hostname }}"
+    password: "{{ ansible_password }}"
+    username: "{{ ansible_user }}"
+    validate_certs: no
+    options:
+      "Syslog.global.logDir": '{{ logDir }}'
+  delegate_to: localhost   
+
+- name: V-256407_rule
+  community.vmware.vmware_host_config_manager:
+    esxi_hostname: "{{ inventory_hostname }}"
+    hostname: "{{ inventory_hostname }}"
+    password: "{{ ansible_password }}"
+    username: "{{ ansible_user }}"
+    validate_certs: no
+    options:
+      "UserVars.DcuiTimeOut": '120'
+  delegate_to: localhost   
+
+- name: V-256406_rule
+  community.vmware.vmware_host_config_manager:
+    esxi_hostname: "{{ inventory_hostname }}"
+    hostname: "{{ inventory_hostname }}"
+    password: "{{ ansible_password }}"
+    username: "{{ ansible_user }}"
+    validate_certs: no
+    options:
+      "UserVars.ESXiShellTimeOut": '600'
+  delegate_to: localhost   
+
+- name: V-256405_rule
+  community.vmware.vmware_host_config_manager:
+    esxi_hostname: "{{ inventory_hostname }}"
+    hostname: "{{ inventory_hostname }}"
+    password: "{{ ansible_password }}"
+    username: "{{ ansible_user }}"
+    validate_certs: no
+    options:
+      "UserVars.ESXiShellInteractiveTimeOut": '120'
+  delegate_to: localhost   
+
+- name: V-256404_rule
+  community.vmware.vmware_host_config_manager:
+    esxi_hostname: "{{ inventory_hostname }}"
+    hostname: "{{ inventory_hostname }}"
+    password: "{{ ansible_password }}"
+    username: "{{ ansible_user }}"
+    validate_certs: no
+    options:
+      "Config.HostAgent.plugins.hostsvc.esxAdminsGroup": '{{ esxAdminsGroup }}'
+  delegate_to: localhost   
+
+- name: V-256399_rule
+  community.vmware.vmware_host_config_manager:
+    esxi_hostname: "{{ inventory_hostname }}"
+    hostname: "{{ inventory_hostname }}"
+    password: "{{ ansible_password }}"
+    username: "{{ ansible_user }}"
+    validate_certs: no
+    options:
+      "Config.HostAgent.plugins.solo.enableMob": 'false'
+  delegate_to: localhost   
+
+- name: V-256398_rule
+  community.vmware.vmware_host_config_manager:
+    esxi_hostname: "{{ inventory_hostname }}"
+    hostname: "{{ inventory_hostname }}"
+    password: "{{ ansible_password }}"
+    username: "{{ ansible_user }}"
+    validate_certs: no
+    options:
+      "Security.PasswordHistory": '5'
+  delegate_to: localhost   
+
+- name: V-2256397_rule
+  community.vmware.vmware_host_config_manager:
+    esxi_hostname: "{{ inventory_hostname }}"
+    hostname: "{{ inventory_hostname }}"
+    password: "{{ ansible_password }}"
+    username: "{{ ansible_user }}"
+    validate_certs: no
+    options:
+      "Security.PasswordQualityControl": 'similar=deny retry=3 min=disabled,disabled,disabled,disabled,15'
+  delegate_to: localhost   
+
+- name: V-256396_rule
+  community.vmware.vmware_host_config_manager:
+    esxi_hostname: "{{ inventory_hostname }}"
+    hostname: "{{ inventory_hostname }}"
+    password: "{{ ansible_password }}"
+    username: "{{ ansible_user }}"
+    validate_certs: no
+    options:
+      "Config.HostAgent.log.level": 'info'
+  delegate_to: localhost   
+
+- name: V-256382_rule
+  community.vmware.vmware_host_config_manager:
+    esxi_hostname: "{{ inventory_hostname }}"
+    hostname: "{{ inventory_hostname }}"
+    password: "{{ ansible_password }}"
+    username: "{{ ansible_user }}"
+    validate_certs: no
+    options:
+      "Config.Etc.issue": '{{ sshBanner }}'
+  delegate_to: localhost   
+
+- name: V-256381_rule
+  community.vmware.vmware_host_config_manager:
+    esxi_hostname: "{{ inventory_hostname }}"
+    hostname: "{{ inventory_hostname }}"
+    password: "{{ ansible_password }}"
+    username: "{{ ansible_user }}"
+    validate_certs: no
+    options:
+      "Annotations.WelcomeMessage": '{{ shellBanner }}'
+  delegate_to: localhost   
+
+- name: V-256380_rule
+  community.vmware.vmware_host_config_manager:
+    esxi_hostname: "{{ inventory_hostname }}"
+    hostname: "{{ inventory_hostname }}"
+    password: "{{ ansible_password }}"
+    username: "{{ ansible_user }}"
+    validate_certs: no
+    options:
+      "Security.AccountUnlockTime": '900'
+  delegate_to: localhost   
+
+- name: V-256379_rule
+  community.vmware.vmware_host_config_manager:
+    esxi_hostname: "{{ inventory_hostname }}"
+    hostname: "{{ inventory_hostname }}"
+    password: "{{ ansible_password }}"
+    username: "{{ ansible_user }}"
+    validate_certs: no
+    options:
+      "Security.AccountLockFailures": '3'
+  delegate_to: localhost   
+
+- name: V-256378_rule
+  community.vmware.vmware_host_config_manager:
+    esxi_hostname: "{{ inventory_hostname }}"
+    hostname: "{{ inventory_hostname }}"
+    password: "{{ ansible_password }}"
+    username: "{{ ansible_user }}"
+    validate_certs: no
+    options:
+      "Syslog.global.logHost": '{{ syslogServer }}'
+  delegate_to: localhost   
+
+- name: V-256376_rule
+  community.vmware.vmware_host_config_manager:
+    esxi_hostname: "{{ inventory_hostname }}"
+    hostname: "{{ inventory_hostname }}"
+    password: "{{ ansible_password }}"
+    username: "{{ ansible_user }}"
+    validate_certs: no
+    options:
+      "DCUI.Access": 'root'
+  delegate_to: localhost   

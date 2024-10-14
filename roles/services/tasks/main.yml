@@ -1,0 +1,126 @@
+---
+#services Role
+- name: V-25648_rule 
+  community.vmware.vmware_host_service_manager:
+    esxi_hostname: "{{ inventory_hostname }}"
+    hostname: "{{ inventory_hostname }}"
+    password: "{{ ansible_password }}"
+    username: "{{ ansible_user }}"
+    validate_certs: no
+    service_name: sfcbd-watchdog
+    state: stop
+    service_policy: off
+  delegate_to: localhost
+  tags: 
+    - service
+    - CIM
+
+- name: V-256435_rule 
+  community.vmware.vmware_host_service_manager:
+    esxi_hostname: "{{ inventory_hostname }}"
+    hostname: "{{ inventory_hostname }}"
+    password: "{{ ansible_password }}"
+    username: "{{ ansible_user }}"
+    validate_certs: no
+    service_name: slpd
+    state: stop
+    service_policy: off
+  delegate_to: localhost
+  tags: 
+    - service
+    - slpd
+
+- name: V-256401_rule 
+  community.vmware.vmware_host_service_manager:
+    esxi_hostname: "{{ inventory_hostname }}"
+    hostname: "{{ inventory_hostname }}"
+    password: "{{ ansible_password }}"
+    username: "{{ ansible_user }}"
+    validate_certs: no
+    service_name: TSM
+    state: stop
+    service_policy: off
+  delegate_to: localhost
+  tags: 
+    - service
+    - shell
+
+- name: V-256400_rule 
+  community.vmware.vmware_host_service_manager:
+    esxi_hostname: "{{ inventory_hostname }}"
+    hostname: "{{ inventory_hostname }}"
+    password: "{{ ansible_password }}"
+    username: "{{ ansible_user }}"
+    validate_certs: no
+    service_name: TSM-SSH
+    state: stop
+    service_policy: off
+  delegate_to: localhost
+  tags: 
+    - service
+    - ssh
+
+# - name: SV-239291r674802_rule Shell Service
+#   community.vmware.vmware_host_service_manager:
+#     cluster_name: "{{ cluster_name }}"
+#     #esxi_hostname: "{{ inventory_hostname }}"
+#     hostname: "{{ vcenter_name }}"
+#     password: "{{ ansible_password }}"
+#     username: "{{ vcenter_username }}"
+#     validate_certs: no
+#     service_name: TSM
+#     state: absent
+#     service_policy: off
+#     state: absent
+#   delegate_to: localhost
+#   tags:
+#     - service
+#     - shell
+# - name:  SV-239301r674832_rule NTP Servers
+#   community.vmware.vmware_host_ntp:
+#     cluster_name: "{{ cluster_name }}"
+#     #esxi_hostname: "{{ inventory_hostname }}"
+#     hostname: "{{ inventory_hostname }}"
+#     password: "{{ ansible_password }}"
+#     username: "{{ ansible_user }}"
+#     validate_certs: no
+#     ntp_servers: "{{ item }}"
+#   loop: "{{ ntp_server }}"
+#   delegate_to: localhost
+#   tags:
+#     - service
+#     - ntp
+# - name: SV-239301r674832_rule NTP Serivce ON
+#   community.vmware.vmware_host_service_manager:
+#     cluster_name: "{{ cluster_name }}"
+#     #esxi_hostname: "{{ inventory_hostname }}"
+#     hostname: "{{ vcenter_name }}"
+#     password: "{{ ansible_password }}"
+#     username: "{{ vcenter_username }}"
+#     validate_certs: no
+#     service_name: ntpd
+#     state: present
+#     service_policy: on
+#     state: present
+#   delegate_to: localhost
+#   tags:
+#     - service
+#     - ntp
+
+# - name: SV-239307r674850_rule Disable SNMP if not being used
+#   community.vmware.vmware_host_service_manager:
+#     cluster_name: "{{ cluster_name }}"
+#     esxi_hostname: "{{ inventory_hostname }}"
+#     hostname: "{{ vcenter_name }}"
+#     password: "{{ ansible_password }}"
+#     username: "{{ vcenter_username }}"
+#     validate_certs: no
+#     service_name: snmpd
+#     state: absent
+#     service_policy: off
+#     state: absent
+#   delegate_to: localhost
+#   when: snmp_in_use|bool == False
+#   tags:
+#     - snmp
+#     - service

@@ -1,0 +1,22 @@
+---
+# VMK tasks
+- name: Gather vswitch info
+  community.vmware.vmware_vswitch_info:
+    esxi_hostname: "{{ inventory_hostname }}"
+    hostname: "{{ inventory_hostname }}"
+    password: "{{ ansible_password }}"
+    username: "{{ ansible_user }}"
+    validate_certs: no
+  register: vswitch_info
+  delegate_to: localhost
+
+- debug: 
+    msg: test  {{ item }}
+  with_items: "{{ vswitch_info.hosts_vswitch_info[ansible_hostname] }} "
+#Config
+- name: set vSwitch Security policy
+  command:
+    cmd: esxcli network vswitch standard policy security set --vswitch-name='{{ item }}' --allow-promiscuous=false --allow-mac-change=false --allow-forged-transmits=false
+#   #with_items: "{{ vswitch_info.hosts_vswitch_info[ansible_hostname + '.' + ansible_domain] }} "
+  with_items: "{{ vswitch_info.hosts_vswitch_info[ansible_hostname] }} "
+
